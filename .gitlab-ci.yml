@@ -1,0 +1,19 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+before_script:
+  - docker info
+  - echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+  - apk add wget jq curl git
+  - mkdir -p /root/.docker/cli-plugins
+  - BUILDX_LATEST=$(curl -s https://api.github.com/repos/docker/buildx/releases/latest | jq -r ".tag_name")
+  - wget -O /root/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/download/$BUILDX_LATEST/buildx-$BUILDX_LATEST.linux-amd64
+  - chmod a+x /root/.docker/cli-plugins/docker-buildx
+
+build:
+  stage: build
+  script:
+    - docker buildx create --use
+    - docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t $CI_REGISTRY_IMAGE --push .
