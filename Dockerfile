@@ -1,7 +1,7 @@
 FROM alpine:latest
 ENV APP_PORT=80
 ENV TOR_PORT=80
-RUN apk add --update --no-cache tor sudo
+RUN apk add --update --no-cache tor
 COPY tor.sh /tor.sh
 RUN chown -R tor /etc/tor && \
     chmod +x /tor.sh
