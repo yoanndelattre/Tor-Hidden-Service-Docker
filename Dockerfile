@@ -1,5 +1,6 @@
 FROM alpine:latest
 ENV APP_PORT=80
+ENV APP_ADDR="127.0.0.1"
 ENV TOR_PORT=80
 RUN apk add --update --no-cache tor
 COPY tor.sh /tor.sh
