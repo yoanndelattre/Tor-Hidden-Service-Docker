@@ -1,10 +1,10 @@
 FROM alpine:latest
-ENV APP_NAME="app.com"
-ENV APP_PORT=80
-ENV TOR_PORT=80
-RUN apk add --update --no-cache tor
+ENV APP_NAME="app.com" \
+    APP_PORT=80 \
+    TOR_PORT=80
 COPY tor.sh /tor.sh
-RUN mkdir -p /var/lib/tor/hidden_service && \
+RUN apk add --update --no-cache tor && \
+    mkdir -p /var/lib/tor/hidden_service && \
     chown -R tor /var/lib/tor/hidden_service && \
     chmod 700 /var/lib/tor/hidden_service && \
     chown -R tor /etc/tor && \
