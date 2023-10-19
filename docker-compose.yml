@@ -5,7 +5,7 @@ services:
     container_name: tor-hidden-service
     hostname: tor-hidden-service
     restart: always
-    image: registry.gitlab.com/yoanndelattre/tor-hidden-service-docker:latest
+    image: ghcr.io/yoanndelattre/tor-hidden-service-docker:main
     environment:
       - APP_NAME=web
       - APP_PORT=80
